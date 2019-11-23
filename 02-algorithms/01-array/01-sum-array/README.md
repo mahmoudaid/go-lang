@@ -1,10 +1,9 @@
-package main
+# Problem:
+Write a method that will return the sum of all elements of the integer Array, given Array as an input argument.
 
-import (
-	"fmt"
-	"log"
-	"time"
-)
+# Solution:
+```
+import "fmt"
 
 func sumArray(data []int) int {
 	size := len(data)
@@ -18,13 +17,7 @@ func sumArray(data []int) int {
 }
 
 func main() {
-	// Helper to calculate the excution time.
-	start := time.Now()
-	// time.Sleep(time.Second * 2)
-
 	data := []int{1, 2, 3, 4, 5, 6, 7, 8, 9}
 	fmt.Println("The sum of all values in array:", sumArray(data))
-
-	// Helper to calculate the excution time.
-	log.Printf("Excution took %s \n", time.Since(start))
 }
+```
