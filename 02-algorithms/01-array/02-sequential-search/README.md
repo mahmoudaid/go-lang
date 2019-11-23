@@ -22,5 +22,4 @@ func main() {
 	fmt.Println(sequentialSearch(data, 7))
 	fmt.Println(sequentialSearch(data, 8))
 }
-
 ```
