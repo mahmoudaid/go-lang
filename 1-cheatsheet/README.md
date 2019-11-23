@@ -32,6 +32,15 @@ GoLang Cheat Sheet
 	- [Closing channels](#closing-channels)
 - [Error control](#error-control)
 	- [Defer](#defer)
+  - [Deferring functions](#deferring-functions)
+- [Structs](#structs)
+  - [Defining](#defining)
+  - [Literals](#literals)
+  - [Pointers to structs](#pointers-to-structs)
+- [Methods](#methods)
+  - [Receivers](#receivers)
+  - [Mutation](#mutation)
+- [References](#references)
 
 # Run example
 `$ go run cheatsheet.go`
@@ -328,8 +337,78 @@ func main() {
 Go blog: [Defer, panic and recover](https://blog.golang.org/defer-panic-and-recover)
 
 ## Deferring functions
+Lambdas are better suited for defer blocks.
+```
+func main() {
+  defer func() {
+    fmt.Println("Done")
+  }()
+  fmt.Println("Working...")
+}
+```
 
+# Structs
+## Defining
+```
+type Vertex struct {
+  X int
+  Y int
+}
 
+func main() {
+  v := Vertex{1, 2}
+  v.X = 4
+  fmt.Println(v.X, v.Y)
+}
+```
+
+## Literals
+```
+v := Vertex{X: 1, Y: 2}
+
+// Field names can be omitted
+v := Vertex{1, 2}
+
+// Y is implicit
+v := Vertex{X: 1}
+```
+
+## Pointers to structs
+Doing v.X is the same as doing (*v).X, when v is a pointer.
+```
+v := &Vertex{1, 2}
+v.X = 2
+```
+# Methods
+## Receivers
+There are no classes, but you can define functions with receivers.
+```
+type Vertex struct {
+  X, Y float64
+}
+
+func (v Vertex) Abs() float64 {
+  return math.Sqrt(v.X * v.X + v.Y * v.Y)
+}
+ 
+v: = Vertex{1, 2}
+v.Abs()
+```
+A Tour of Go: [Methods](https://tour.golang.org/methods/1)
+
+## Mutation
+By defining your receiver as a pointer (*Vertex), you can do mutations.
+```
+func (v *Vertex) Scale(f float64) {
+  v.X = v.X * f
+  v.Y = v.Y * f
+}
+ 
+v := Vertex{6, 12}
+v.Scale(0.5)
+// `v` is updated
+```
+A Tour of Go: [Pointer receivers](https://tour.golang.org/methods/4)
 
 # References
 - [A tour of Go](https://tour.golang.org/)

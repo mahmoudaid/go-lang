@@ -2,6 +2,12 @@ package main
 
 import "fmt"
 
+// Vertex Struct Defining.
+type Vertex struct {
+	X int
+	Y int
+}
+
 func main() {
 	docSection("Hello world")
 	// Hello world
@@ -135,21 +141,41 @@ func main() {
 	// Concurrency
 	docSubSection("Goroutines")
 	// Goroutines
-	
+
 	// A "channel"
-  ch := make(chan string)
+	ch := make(chan string)
 
-  // Start concurrent routines
-  go push("Moe", ch)
-  go push("Larry", ch)
-  go push("Curly", ch)
+	// Start concurrent routines
+	go push("Moe", ch)
+	go push("Larry", ch)
+	go push("Curly", ch)
 
-  // Read 3 results
-  // (Since our goroutines are concurrent,
-  // the order isn't guaranteed!)
-  fmt.Println(<-ch, <-ch, <-ch)
+	// Read 3 results
+	// (Since our goroutines are concurrent,
+	// the order isn't guaranteed!)
+	fmt.Println(<-ch, <-ch, <-ch)
 
-	
+	docSection("Error control")
+	// Error control
+	docSubSection("Defer")
+	// Defer
+	defer fmt.Println("Defer Done")
+	fmt.Println("Working...")
+
+	docSubSection("Deferring functions")
+	// Deferring functions
+	defer func() {
+		fmt.Println("Defer Done")
+	}()
+	fmt.Println("Working...")
+
+	docSection("Struct")
+	// Struct
+	docSubSection("defining")
+	// defining
+	v := Vertex{1, 2}
+  v.X = 4
+  fmt.Println(v.X, v.Y)
 }
 
 /**
@@ -200,6 +226,6 @@ func split(sum int) (x, y int) {
  * Concurrency Goroutines.
  */
 func push(name string, ch chan string) {
-  msg := "Hey, " + name
-  ch <- msg
+	msg := "Hey, " + name
+	ch <- msg
 }
